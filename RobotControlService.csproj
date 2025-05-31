@@ -20,9 +20,12 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Data\Configurations\" />
-    <Folder Include="Features\Auth\Login\" />
-    <Folder Include="Kubernetes\" />
-    <Folder Include="Middleware\" />
+    <Folder Include="Features\Auth\GetToken\" />
+    <Folder Include="Features\Command\GetCommandHistory\" />
+    <Folder Include="Features\Command\GetCommand\" />
+    <Folder Include="Features\Command\UpdateCommand\" />
+    <Folder Include="Features\Command\SendCommand\" />
+    <Folder Include="Features\Robot\GetRobotStatus\" />
     <Folder Include="mongodb\" />
   </ItemGroup>
 

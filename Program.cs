@@ -1,4 +1,6 @@
 
+using RobotControlService.Middleware;
+
 namespace RobotControlService
 {
     public class Program
