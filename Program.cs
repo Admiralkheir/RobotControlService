@@ -3,6 +3,8 @@ using RobotControlService.Behaviors;
 using RobotControlService.Middleware;
 using System.Reflection;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using RobotControlService.Data;
 
 namespace RobotControlService
 {
@@ -32,6 +34,12 @@ namespace RobotControlService
                 // Pipeline behaviour for using fluentvalida6ations
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
+
+            // Add DbContext
+
+            builder.Services.AddDbContext<RobotDbContext>(options =>
+                options.UseMongoDB(builder.Configuration["MongoConnection:ConnectionURI"], builder.Configuration["MongoConnection:DatabaseName"])
+            );
 
             var app = builder.Build();
 
