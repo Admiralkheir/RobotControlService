@@ -1,5 +1,8 @@
 
+using RobotControlService.Behaviors;
 using RobotControlService.Middleware;
+using System.Reflection;
+using FluentValidation;
 
 namespace RobotControlService
 {
@@ -19,6 +22,17 @@ namespace RobotControlService
             // Add health checks
             builder.Services.AddHealthChecks();
 
+            // Add FluentValidation
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // Add MediatR
+            builder.Services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblyContaining<Program>();
+                // Pipeline behaviour for using fluentvalida6ations
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -28,7 +42,7 @@ namespace RobotControlService
                 app.UseSwaggerUI();
             }
 
-            app.MapHealthChecks("/healthz");
+            app.MapHealthChecks("/health");
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
 

@@ -1,1 +1,120 @@
-﻿
+﻿# deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: robotcontrolservice
+  name: robotcontrolservice-deployment
+  namespace: test
+spec:
+  # replicas: 3
+  selector:
+    matchLabels:
+      app: robotcontrolservice
+  template:
+    metadata:
+      labels:
+        app: robotcontrolservice
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: test
+          image: robotcontrolservice:0.1
+          imagePullPolicy: IfNotPresent
+          name: robotcontrolservice
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 100m
+              memory: 300Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: robotcontrolservice
+---
+# service
+apiVersion: v1
+kind: Service
+metadata:
+  name: robotcontrolservice
+  namespace: test
+spec:
+  selector:
+    app: robotcontrolservice
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+# pdb
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: robotcontrolservice-pdb
+  namespace: test
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: robotcontrolservice
+---
+# hpa
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: robotcontrolservice-test-hpa
+  namespace: test
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: robotcontrolservice-deployment
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 20
+      - type: Pods
+        value: 5
+        periodSeconds: 20
+      selectPolicy: Max
+  minReplicas: 3
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70
