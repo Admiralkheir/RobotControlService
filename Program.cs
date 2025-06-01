@@ -5,6 +5,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using RobotControlService.Data;
+using Serilog;
 
 namespace RobotControlService
 {
@@ -15,6 +16,24 @@ namespace RobotControlService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            // SeriLog logging
+            Log.Logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(builder.Configuration) // Reads "Serilog" section from appsettings
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .WriteTo.ApplicationInsights(
+                   builder.Configuration["ApplicationInsights:ConnectionString"], // Or use TelemetryConfiguration.Active
+                   TelemetryConverter.Traces)
+               .CreateLogger();
+
+            builder.Host.UseSerilog();
+
+            // Add Application Insights telemetry
+            builder.Services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
