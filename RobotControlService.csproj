@@ -10,9 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="MongoDB.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
@@ -22,12 +24,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Auth\GetToken\" />
+    <Folder Include="Features\Auth\CreateUser\" />
+    <Folder Include="Features\Auth\DeleteUser\" />
+    <Folder Include="Features\Auth\GetUser\" />
+    <Folder Include="Features\Auth\UpdateUser\" />
     <Folder Include="Features\Command\GetCommandHistory\" />
     <Folder Include="Features\Command\GetCommand\" />
     <Folder Include="Features\Command\UpdateCommand\" />
     <Folder Include="Features\Command\SendCommand\" />
     <Folder Include="Features\Robot\GetRobotStatus\" />
+    <Folder Include="Features\Robot\CreateRobot\" />
+    <Folder Include="Features\Robot\DeleteRobot\" />
+    <Folder Include="Features\Robot\UpdateRobot\" />
     <Folder Include="mongodb\" />
   </ItemGroup>
 

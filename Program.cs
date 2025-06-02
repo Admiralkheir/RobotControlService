@@ -1,11 +1,16 @@
 
-using RobotControlService.Behaviors;
-using RobotControlService.Middleware;
-using System.Reflection;
+using Asp.Versioning;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using RobotControlService.Behaviors;
 using RobotControlService.Data;
+using RobotControlService.Middleware;
 using Serilog;
+using System.Reflection;
+using System.Text;
 
 namespace RobotControlService
 {
@@ -15,7 +20,56 @@ namespace RobotControlService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // swagger configuration
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(o =>
+            {
+                o.CustomSchemaIds(id => id.FullName!.Replace('+', '-'));
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "JWT Authentication",
+                    Description = "Enter your JWT token in this field",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT"
+                };
+
+                o.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+
+                var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
+                        },
+                        []
+                    }
+                };
+
+                o.AddSecurityRequirement(securityRequirement);
+            });
+
+            // Add versioning
+            builder.Services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ApiVersionReader = new UrlSegmentApiVersionReader(); // Read version from URL segment
+            })
+            //.AddMvc()
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V"; // Version format in Swagger UI
+                options.SubstituteApiVersionInUrl = true; // Substitute version in URL
+            });
 
             // SeriLog logging
             Log.Logger = new LoggerConfiguration()
@@ -36,9 +90,6 @@ namespace RobotControlService
             });
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
             // Add health checks
             builder.Services.AddHealthChecks();
@@ -55,10 +106,24 @@ namespace RobotControlService
             });
 
             // Add DbContext
-
             builder.Services.AddDbContext<RobotDbContext>(options =>
-                options.UseMongoDB(builder.Configuration["MongoConnection:ConnectionURI"], builder.Configuration["MongoConnection:DatabaseName"])
+                options.UseMongoDB(builder.Configuration["MongoConnection:ConnectionURI"]!, builder.Configuration["MongoConnection:DatabaseName"]!)
             );
+
+            // Register JWT authentication and authorization 
+            builder.Services.AddAuthorization();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.RequireHttpsMetadata = false;
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
             var app = builder.Build();
 
@@ -73,8 +138,9 @@ namespace RobotControlService
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

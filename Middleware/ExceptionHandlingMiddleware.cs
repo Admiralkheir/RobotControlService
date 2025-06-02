@@ -47,6 +47,7 @@ namespace RobotControlService.Middleware
             exception switch
             {
                 BadRequestException => StatusCodes.Status400BadRequest,
+                UnauthorizedException => StatusCodes.Status401Unauthorized,
                 NotFoundException => StatusCodes.Status404NotFound,
                 ValidationException => StatusCodes.Status422UnprocessableEntity,
                 _ => StatusCodes.Status500InternalServerError
