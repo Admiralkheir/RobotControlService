@@ -2,6 +2,7 @@
 
 namespace RobotControlService.Domain.Entities
 {
+    // initialScript should add admin user
     public class User : IEntity<ObjectId>
     {
         public ObjectId Id { get; set; }

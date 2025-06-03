@@ -90,6 +90,7 @@ namespace RobotControlService
             });
 
             builder.Services.AddControllers();
+            builder.Services.AddHttpContextAccessor();
 
             // Add health checks
             builder.Services.AddHealthChecks();

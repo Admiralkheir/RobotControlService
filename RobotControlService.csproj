@@ -24,18 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Auth\CreateUser\" />
-    <Folder Include="Features\Auth\DeleteUser\" />
-    <Folder Include="Features\Auth\GetUser\" />
-    <Folder Include="Features\Auth\UpdateUser\" />
-    <Folder Include="Features\Command\GetCommandHistory\" />
-    <Folder Include="Features\Command\GetCommand\" />
-    <Folder Include="Features\Command\UpdateCommand\" />
-    <Folder Include="Features\Command\SendCommand\" />
-    <Folder Include="Features\Robot\GetRobotStatus\" />
-    <Folder Include="Features\Robot\CreateRobot\" />
-    <Folder Include="Features\Robot\DeleteRobot\" />
-    <Folder Include="Features\Robot\UpdateRobot\" />
     <Folder Include="mongodb\" />
   </ItemGroup>
 

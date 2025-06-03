@@ -1,6 +1,6 @@
 ﻿namespace RobotControlService.Features.Auth.Login
 {
-    public class LoginRequestValidator
+    public class LoginDto
     {
     }
 }
