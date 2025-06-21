@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Robot.DeleteRobot
 {
-    public class DeleteRobotResponse
-    {
-    }
+    public record DeleteRobotResponse(string RobotId, string Name, bool IsDeleted);
 }

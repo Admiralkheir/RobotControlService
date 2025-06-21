@@ -1,6 +1,8 @@
-﻿namespace RobotControlService.Features.Auth.CreateUser
+﻿using MediatR;
+using MongoDB.Bson;
+using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Auth.CreateUser
 {
-    public class CreateUserRequest
-    {
-    }
+    public record CreateUserRequest(string Username, string Password, string Role, List<ObjectId> RobotIds) : IRequest<CreateUserResponse>;
 }

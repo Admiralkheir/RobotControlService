@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Auth.DeleteUser
+﻿using MongoDB.Bson;
+
+namespace RobotControlService.Features.Auth.DeleteUser
 {
-    public class DeleteUserResponse
-    {
-    }
+    public record DeleteUserResponse(string UserId, string Username);
 }

@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Auth.Login
 {
-    public class LoginResponse
-    {
-    }
+    public record LoginResponse(string Token);
 }

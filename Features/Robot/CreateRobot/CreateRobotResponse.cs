@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Robot.CreateRobot
+﻿using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Robot.CreateRobot
 {
-    public class CreateRobotResponse
-    {
-    }
+    public record CreateRobotResponse(string RobotId, DateTime CreatedDate, string Name, string Description, bool IsDeleted, string Status, Position Position);
 }

@@ -1,6 +1,7 @@
-﻿namespace RobotControlService.Features.Auth.DeleteUser
+﻿using MediatR;
+using MongoDB.Bson;
+
+namespace RobotControlService.Features.Auth.DeleteUser
 {
-    public class DeleteUserRequest
-    {
-    }
+    public record DeleteUserRequest(string Username) : IRequest<DeleteUserResponse>;
 }

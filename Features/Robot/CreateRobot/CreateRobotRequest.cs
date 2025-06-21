@@ -1,6 +1,7 @@
-﻿namespace RobotControlService.Features.Robot.CreateRobot
+﻿using MediatR;
+using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Robot.CreateRobot
 {
-    public class CreateRobotRequest
-    {
-    }
+    public record CreateRobotRequest(string Name, string Description, Position Position) : IRequest<CreateRobotResponse> ;
 }

@@ -1,6 +1,7 @@
-﻿namespace RobotControlService.Features.Auth.UpdateUser
+﻿using MongoDB.Bson;
+using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Auth.UpdateUser
 {
-    public class UpdateUserDto
-    {
-    }
+    public record UpdateUserDto(string Username, string NewPassword, string NewRole, List<string>? RobotNames);
 }

@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Robot.UpdateRobot
 {
-    public class UpdateRobotResponse
-    {
-    }
+    public record UpdateRobotResponse(string Name, string Description, string Id);
 }

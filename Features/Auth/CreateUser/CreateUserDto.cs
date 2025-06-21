@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Auth.CreateUser
+﻿using MongoDB.Bson;
+
+namespace RobotControlService.Features.Auth.CreateUser
 {
-    public class CreateUserDto
-    {
-    }
+    public record CreateUserDto(string Username, string Password, string Role, List<ObjectId>? RobotIds);
 }

@@ -2,8 +2,8 @@
 {
     public class UserNotFoundException : NotFoundException
     {
-        public UserNotFoundException(string usernane)
-            : base($"The User with this username: {usernane} was not found")
+        public UserNotFoundException(string username)
+            : base($"The User with this userName: {username} was not found")
         {
 
         }

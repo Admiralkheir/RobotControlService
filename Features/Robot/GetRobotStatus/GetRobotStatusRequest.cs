@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Robot.GetRobotStatus
+﻿using MediatR;
+
+namespace RobotControlService.Features.Robot.GetRobotStatus
 {
-    public class GetRobotStatusRequest
-    {
-    }
+    public record GetRobotStatusRequest(string Name) : IRequest<GetRobotStatusResponse>;
 }

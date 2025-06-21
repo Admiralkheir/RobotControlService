@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Robot.DeleteRobot
+﻿using MediatR;
+
+namespace RobotControlService.Features.Robot.DeleteRobot
 {
-    public class DeleteRobotRequest
-    {
-    }
+    public record DeleteRobotRequest(string Name) : IRequest<DeleteRobotResponse>;
 }

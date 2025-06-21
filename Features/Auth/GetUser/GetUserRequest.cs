@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Auth.GetUser
+﻿using MediatR;
+
+namespace RobotControlService.Features.Auth.GetUser
 {
-    public class GetUserRequest
-    {
-    }
+    public record GetUserRequest(string Username) : IRequest<GetUserResponse>;
 }

@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Robot.UpdateRobot
+﻿using MediatR;
+
+namespace RobotControlService.Features.Robot.UpdateRobot
 {
-    public class UpdateRobotRequest
-    {
-    }
+    public record UpdateRobotRequest(string Name, string NewDescription) : IRequest<UpdateRobotResponse>;
 }

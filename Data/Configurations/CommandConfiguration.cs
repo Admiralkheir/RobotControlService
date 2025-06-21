@@ -11,7 +11,8 @@ namespace RobotControlService.Data.Configurations
         {
             builder.ToCollection("commands");
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.CreatedDate).HasAnnotation("BsonDefaultValue", DateTime.UtcNow);
+            builder.Property(c => c.CommandStatus).HasConversion<string>();
+            builder.Property(c => c.CommandType).HasConversion<string>();
         }
     }
 }

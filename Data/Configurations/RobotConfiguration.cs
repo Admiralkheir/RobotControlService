@@ -11,9 +11,8 @@ namespace RobotControlService.Data.Configurations
         {
             builder.ToCollection("robots");
             builder.HasKey(r => r.Id);
-            builder.Property(r => r.CreatedDate).HasAnnotation("BsonDefaultValue", DateTime.UtcNow);
-            // create a unique index on the Name field
-            builder.HasIndex(u => u.Name).IsUnique();
+            builder.Property(u => u.Status).HasConversion<string>();
+            //builder.HasIndex(u => u.Name).IsUnique();
 
         }
     }

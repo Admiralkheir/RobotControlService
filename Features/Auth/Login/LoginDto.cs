@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Auth.Login
 {
-    public class LoginDto
-    {
-    }
+    public record LoginDto(string Username, string Password);
 }
