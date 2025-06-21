@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 
 namespace RobotControlService.Domain.Entities
 {
@@ -12,7 +14,7 @@ namespace RobotControlService.Domain.Entities
         public ObjectId UserId { get; set; }
         public CommandStatus CommandStatus { get; set; }
         public CommandType CommandType { get; set; }
-        public Dictionary<string, object> CommandParameters { get; set; }
+        public Dictionary<string, string> CommandParameters { get; set; }
         public string? FailureReason { get; set; }
     }
     public enum CommandStatus

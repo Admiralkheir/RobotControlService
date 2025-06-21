@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Command.UpdateCommandStatus
+﻿using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Command.UpdateCommandStatus
 {
-    public class UpdateCommandStatusResponse
-    {
-    }
+    public record UpdateCommandStatusResponse(string RobotName, string RobotStatus, Position Position, string CurrentCommandId);
 }

@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Command.UpdateCommandStatus
+﻿using MediatR;
+
+namespace RobotControlService.Features.Command.UpdateCommandStatus
 {
-    public class UpdateCommandStatusRequest
-    {
-    }
+    public record UpdateCommandStatusRequest(string CommandId, string NewCommandStatus, string FailureReason) : IRequest<UpdateCommandStatusResponse>;
 }

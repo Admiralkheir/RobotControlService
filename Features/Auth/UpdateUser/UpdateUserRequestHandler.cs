@@ -41,7 +41,7 @@ namespace RobotControlService.Features.Auth.UpdateUser
                 user.RobotIds = robotIds;
             }
 
-            user.Role = Enum.Parse<UserRole>(request.NewRole); // Parse the new role from string to UserRole enum
+            user.Role = Enum.Parse<UserRole>(request.NewRole, true); // Parse the new role from string to UserRole enum
             user.PasswordHash = _authService.HashPassword(request.NewPassword);
 
             _dbContext.Users.Update(user);

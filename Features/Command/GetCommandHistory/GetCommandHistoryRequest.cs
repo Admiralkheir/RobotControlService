@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Command.GetCommandHistory
+﻿using MediatR;
+
+namespace RobotControlService.Features.Command.GetCommandHistory
 {
-    public class GetCommandHistoryRequest
-    {
-    }
+    public record GetCommandHistoryRequest(string RobotName, int PageIndex, int PageSize) : IRequest<GetCommandHistoryResponse>;
 }

@@ -32,7 +32,7 @@ namespace RobotControlService.Features.Auth.CreateUser
             {
                 PasswordHash = passwordHash,
                 Username = request.Username,
-                Role = Enum.Parse<UserRole>(request.Role),
+                Role = Enum.Parse<UserRole>(request.Role,true),
                 RobotIds = request.RobotIds,
                 CreatedDate = DateTime.UtcNow
             };

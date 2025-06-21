@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Command.SendCommand
+﻿using MediatR;
+
+namespace RobotControlService.Features.Command.SendCommand
 {
-    public class SendCommandRequest
-    {
-    }
+    public record SendCommandRequest(string Username, string RobotName, string CommandType, Dictionary<string, string> CommandParameters) : IRequest<SendCommandResponse>;
 }

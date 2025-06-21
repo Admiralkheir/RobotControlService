@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Command.UpdateCommandStatus
 {
-    public class UpdateCommandStatusDto
-    {
-    }
+    public record UpdateCommandStatusDto(string CommandId, string NewCommandStatus, string? FailureReason);
 }

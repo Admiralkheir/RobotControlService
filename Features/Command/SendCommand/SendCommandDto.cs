@@ -1,6 +1,4 @@
 ﻿namespace RobotControlService.Features.Command.SendCommand
 {
-    public class SendCommandDto
-    {
-    }
+    public record SendCommandDto(string Username, string RobotName, string CommandType, Dictionary<string, string> CommandParameters);
 }

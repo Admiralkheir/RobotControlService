@@ -1,6 +1,6 @@
-﻿namespace RobotControlService.Features.Command.SendCommand
+﻿using RobotControlService.Domain.Entities;
+
+namespace RobotControlService.Features.Command.SendCommand
 {
-    public class SendCommandResponse
-    {
-    }
+    public record SendCommandResponse(string RobotName, string RobotStatus, Position Position, string CurrentCommandId);
 }
