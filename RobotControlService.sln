@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotControlService", "RobotControlService.csproj", "{795BD089-541F-4656-95BB-C33E76865DB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotControlService", ".\RobotControlService\RobotControlService.csproj", "{795BD089-541F-4656-95BB-C33E76865DB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotControlService.Tests", "..\RobotControlService.Tests\RobotControlService.Tests.csproj", "{1B02A931-F7DD-4A4D-8988-F1E68B0F4237}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobotControlService.Tests", ".\RobotControlService.Tests\RobotControlService.Tests.csproj", "{1B02A931-F7DD-4A4D-8988-F1E68B0F4237}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
