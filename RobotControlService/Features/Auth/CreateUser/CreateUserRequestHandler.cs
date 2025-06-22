@@ -41,7 +41,7 @@ namespace RobotControlService.Features.Auth.CreateUser
             await _dbContext.Users.AddAsync(user, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new CreateUserResponse(user.Id.ToString(), user.Username, user.CreatedDate, user.RobotIds, user.Role.ToString());
+            return new CreateUserResponse(user.Id.ToString(), user.Username, user.CreatedDate, user.RobotIds.Select(s => s.ToString()).ToList(), user.Role.ToString());
         }
     }
 }
