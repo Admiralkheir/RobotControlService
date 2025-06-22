@@ -29,6 +29,8 @@ This project implements a REST API for remote monitoring and control of Telexist
 11. [Future Extensibility](#future-extensibility)
     *   [Real-time Communication](#real-time-communication)
     *   [Logging Dashboard](#logging-dashboard)
+    *   [Scability](#scability)
+    *   [Moduler Design](#modular-design)
 12. [Technical Decisions & Highlights](#technical-decisions--highlights)
 13. [Time Breakdown (Example)](#time-breakdown-example)
 
@@ -568,22 +570,44 @@ terraform apply
 ## 11. Future Extensibility
 
 - **Real-time Communication**:
-    - Technology: SignalR is the recommended .NET technology for real-time web functionality.
-    - Integration: A SignalR hub can be added to the API. When a robot's status changes (e.g., after a command completes, or periodically), the API can push updates to connected frontend clients via this hub.
+    - Technology: SignalR is the recommended .NET technology for real-time web functionality or Nats.io with websocket for message streaming.
+    - Integration: A SignalR hub or Nats.io's websocket solution can be added to the API. When a robot's status changes (e.g., after a command completes, or periodically), the API can push updates to connected frontend clients.
 - **Logging Dashboard**:
     - With logs and metrics flowing into Azure Application Insights, Azure Monitor Dashboards or Azure Workbooks can be used to create visualizations for API performance, error rates, robot activity, command throughput, etc. No additional API work is needed if logs are structured well.
 - **Scalability**:
     - The use of Azure App Service allows for independent scaling of compute resource.
-    - Stateless API design (JWT auth) facilitates horizontal scaling.
+    - If the API needs to handle high loads and using other services; Azure Kubernetes Service (AKS) for container orchestration is more suitable.
 - **Modular Design**: Vertical slices (CQRS) allow for easy addition of new features without impacting existing functionality.
 
 ## 12. Technical Decisions & Highlights
+
 - **CQRS Pattern**: Used to separate read and write operations, allowing for better scalability and maintainability.
 - **Pipeline Behaviors**: Implemented for cross-cutting concerns like validation, logging, and exception handling.
 - **Middleware**: Custom middleware for centralized exception handling and logging.
 - **Testcontainers**: Used for integration tests with MongoDB, ensuring a clean state for each test run.
 - **Docker and Kubernetes**: Dockerized the API for consistent deployment across environments. Used Kubernetes (kind) for local development and testing.
-- **Serilog**: Chosen for structured logging, with sinks for console and Azure Application Insights.
-- **Infrastructure as Code**: Used Terraform for reproducible infrastructure deployment, allowing for version control and easy environment setup.
-- **CI/CD with GitHub Actions**: Automated build, test, and deployment processes to ensure code quality and rapid delivery.
-- **Security**: Implemented JWT authentication and role-based authorization to secure API endpoints.
+
+---
+
+- It is assumed that the robot maintains its own internal queue for commands, processing them sequentially and updating status via the PUT endpoint. Using a queue on the robot side can facilitate real-time communication and reduce the load on the service.
+- JWT-based authentication and authorization is used. For more advanced scenarios, OAuth2.0 with Azure Identity or IdentityServer3 can be considered, allowing session management to be handled by an external authorization server.
+- By using a separate authorization server, session management can be centralized, eliminating the need for a dedicated robot session table and manual session time tracking in the API.
+- The current role model can be extended to support more roles, and users may be assigned multiple roles if needed.
+- Azure Key Vault can be used for secure storage of secrets such as JWT keys and connection strings.
+- It is assumed that only the robot itself is allowed to update the status of commands.
+
+## 13. Time Breakdown (Example)
+- Reading Documents & Planning: 3 hours
+- Project Setup & Core Domain Models: 6 hours
+- Authentication Implementation & Tests: 6 hours
+- Command Endpoints & Logic & Tests: 8 hours
+- Robot Endpoints & Logic & Tests: 5 hours
+- MongoDB Integration & Repositories: 5 hours
+- Dockerization (API & docker-compose): 1 hours
+- Logging (Serilog & App Insights setup): 1 hours
+- GitHub Actions CI/CD Pipeline Setup: 2 hours
+- Terraform IaC Scripts: 6 hours
+- README Documentation & Final Review: 6 hours
+- Testing (overall, including integration test setup): 4 hours
+- Refactoring & Polish: 3 hours
+- TOTAL (Estimated): ~56 hours
