@@ -65,7 +65,7 @@ Telexistence provides remote operation services using robots. The goal is to bui
 ## 4. Project Structure
 
 ```text
-├── RobotControlService/                # Main ASP.NET Core Web API project
+├── RobotControlService/              # Main ASP.NET Core Web API project
 │   ├── Behaviors/                      # Pipeline behaviors (e.g., validation)
 │   ├── Data/                           # Database context, seeding logic 
 │   ├── Domain/                         # Domain entities, enums, and value objects 
@@ -259,9 +259,9 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
         "failureReason": "string"
       }
     ],
-    "pageIndex": number,
-    "totalPages": number,
-    "totalCount": number
+    "pageIndex": 0,
+    "totalPages": 0,
+    "totalCount": 0
     }
 }
 ```
@@ -338,7 +338,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 {
   "robotId": "string",
   "name": "string",
-  "isDeleted": bool
+  "isDeleted": true
 }
 ```
 
@@ -378,7 +378,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ### Configuration
 
 *   **`appsettings.json` / `appsettings.Development.json`:** Main application configuration.
-*   **Environment Variables:** For Azure deployment, connection strings, JWT secrets, and Application Insights keys will be configured via App Service Application Settings or Key Vault.
+*   **Environment Variables:** For Azure deployment, connection strings, JWT secrets, and Application Insights keys could be configured via App Service Application Settings or Azure Key Vault.
 
 **Security Note:** For `JwtSettings`, we could use Azure Key Vault
 
