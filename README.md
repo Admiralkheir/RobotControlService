@@ -97,7 +97,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Authenticate user and receive JWT token.
   
 **Request Body:**
-```json
+```jsonc
 {
   "username": "string",
   "password": "string"
@@ -105,7 +105,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "token": "string"
 }
@@ -115,7 +115,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Create a new user (admin only).
   
 **Request Body:**
-```json
+```jsonc
 {
   "username": "string",
   "password": "string",
@@ -125,7 +125,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "userId": "string",
   "username": "string",
@@ -141,7 +141,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 **Query:** `username=string`
   
 **Response:**
-```json
+```jsonc
 {
   "userId": "string",
   "username": "string",
@@ -156,7 +156,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Update user details (admin only).
   
 **Request Body:**
-```json
+```jsonc
 {
   "username": "string",
   "newPassword": "string",
@@ -166,7 +166,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "username": "string",
   "userId": "string",
@@ -181,7 +181,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 **Query:** `username=string`
   
 **Response:**
-```json
+```jsonc
 {
   "userId": "string",
   "username": "string"
@@ -194,7 +194,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Issue a command to a robot.
   
 **Request Body:**
-```json
+```jsonc
 {                
   "username": "string",
   "robotName": "string",
@@ -204,7 +204,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "commandId": "string",
   "robotName": "string",
@@ -218,7 +218,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Update the status of a command (robot role).
   
 **Request Body:**
-```json
+```jsonc
 {
   "commandId": "string",
   "newCommandStatus": "string", // "InProgress", "Completed", "Failed"
@@ -227,7 +227,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "robotName": "string",
   "robotStatus": "string",
@@ -242,7 +242,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 **Query:** `robotName=string&pageIndex=1&pageSize=10`
   
 **Response:**
-```json
+```jsonc
 {
   "commandList": {
     "items": [
@@ -272,7 +272,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Register a new robot.
   
 **Request Body:**
-```json
+```jsonc
 {
   "name": "string",
   "description": "string",
@@ -281,7 +281,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "robotId": "string",
   "createdDate": "2024-01-01T00:00:00Z",
@@ -290,7 +290,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   "isDeleted": false,
   "status": "string",
   "position": { "x": 0, "y": 0, "orientation": 0 }
-  }
+}
 ```
 
 - `GET /api/v1/Robot/GetRobotStatus`  
@@ -299,12 +299,12 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 **Query:** `robotName=string`
   
 **Response:**
-```json
+```jsonc
 {
   "robotName": "string",
   "robotStatus": "string",
   "position": { "x": 0, "y": 0, "orientation": 0 },
-    "currentCommandId": "string"
+  "currentCommandId": "string"
 }
 ```
 
@@ -312,7 +312,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
   Update robot details.
 
 **Request Body:**
-```json
+```jsonc
 {
   "name": "string",
   "newDescription": "string"
@@ -320,7 +320,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 ```
 
 **Response:**
-```json
+```jsonc
 {
   "name": "string",
   "description": "string",
@@ -334,7 +334,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 **Query:** `robotName=string`
   
 **Response:**
-```json
+```jsonc
 {
   "robotId": "string",
   "name": "string",
@@ -374,9 +374,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
     dotnet restore
     dotnet build
     ```
-
  
-
 ### Configuration
 
 *   **`appsettings.json` / `appsettings.Development.json`:** Main application configuration.
@@ -438,7 +436,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 *   **Testcontainers.MongoDb** package is used for tests with MongoDB. This package will automatically start a MongoDB container for testing purposes.
 *   **Data Models (conceptual):**
     *   `Users`: 
-     ```json
+     ```jsonc
         {
            "_id": "ObjectId",            // MongoDB ObjectId
            "createdDate": "datetime",    // User creation date (UTC)
@@ -450,7 +448,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
         }
      ``` 
     *   `Robots`:
-     ```json
+     ```jsonc
         {
             "_id": "ObjectId",                // MongoDB ObjectId
             "createdDate": "datetime",        // Robot creation date (UTC)
@@ -468,7 +466,7 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
         }
      ```
      *   `Commands`:
-      ```json
+      ```jsonc
          {
              "_id": "ObjectId",                  // MongoDB ObjectId
              "createdDate": "datetime",          // Command creation date (UTC)
