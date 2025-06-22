@@ -1,4 +1,4 @@
-﻿# Telexistence Remote Monitoring and Control API
+# Telexistence Remote Monitoring and Control API
 
 This project implements a REST API for remote monitoring and control of Telexistence robots, built with .NET 8. It supports user authentication, command issuance, status tracking, and command history, and is designed for deployment to Azure with CI/CD.
 
@@ -354,7 +354,6 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/) (for local development)
 - [MongoDB](https://www.mongodb.com/) (local or Docker)
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (for deployment)
 - [Terraform](https://www.terraform.io/downloads.html) (for infrastructure provisioning)
 - [Kind](https://kind.sigs.k8s.io/) (for local Kubernetes clusters)
 
