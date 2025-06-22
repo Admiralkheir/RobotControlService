@@ -22,10 +22,10 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Install dependencies & build solution
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build --configuration Release
 
       - name: Run Tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --verbosity normal
 
   docker-deploy:
     needs: build-and-test
