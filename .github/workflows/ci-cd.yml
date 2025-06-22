@@ -45,11 +45,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build . --file Dockerfile --tag ${{ secrets.ACR_LOGIN_SERVER }}/robotcontrolservice:latest
+          docker build . --file Dockerfile --tag ${{ secrets.ACR_LOGIN_SERVER }}/robotcontrolservice:$BUILD_NUMBER
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/robotcontrolservice:latest
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/robotcontrolservice:$BUILD_NUMBER
 
       - name: Deploy to Azure Web App for Containers
         uses: azure/webapps-deploy@v2
