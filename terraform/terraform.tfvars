@@ -1,0 +1,5 @@
+resource_group_name      = "tx-remote-monitoring-rg"
+location                 = "EastUS"
+acr_name                 = "txremoteacregistry123"
+app_service_name         = "tx-robotcontrolservice"
+app_service_plan_name    = "tx-robotcontrolservice-plan"

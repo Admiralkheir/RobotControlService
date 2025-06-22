@@ -530,3 +530,60 @@ A `/.github/workflows/ci-cd.yml` file defines the pipeline.
     *   For container deployment: Configure App Service to pull from ACR.
 
 > Before running the pipeline, ensure that the following GitHub Secrets are set: `ACR_LOGIN_SERVER`, `ACR_USERNAME`, `ACR_PASSWORD`, `AZURE_WEBAPP_NAME`.
+
+### Infrastructure as Code (Terraform)
+
+Terraform configuration to create:
+
+- An Azure Resource Group
+- An Azure Container Registry (ACR)
+- An Azure App Service Plan & Web App for Containers
+
+Terraform Setup (/terraform directory)
+
+- main.tf: Defines the resources.
+- variables.tf: Defines input variables (e.g., resource_group_name, location, app_service_name).
+- outputs.tf: Defines outputs (e.g., App Service hostname).
+- provider.tf: Configures the Azure provider.
+
+> Adjust values in `terraform.tfvars` per your environment.
+
+```bash
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+## 10. Logging
+
+- **Serilog** used for structured logging within the application.
+- **Sinks**:
+   * Console (for local development).
+   * Azure Application Insights (for production, to send logs, traces, and metrics to Azure Monitor).
+- **Configuration**: Serilog configured in Program.cs to read settings from appsettings.json and enrich logs with properties like RequestId, etc.
+
+> Ensure Application Insights is set up in Azure and the connection string is provided in appsettings.json(`ApplicationInsights__ConnectionString`) or as an environment variable.
+
+## 11. Future Extensibility
+
+- **Real-time Communication**:
+    - Technology: SignalR is the recommended .NET technology for real-time web functionality.
+    - Integration: A SignalR hub can be added to the API. When a robot's status changes (e.g., after a command completes, or periodically), the API can push updates to connected frontend clients via this hub.
+- **Logging Dashboard**:
+    - With logs and metrics flowing into Azure Application Insights, Azure Monitor Dashboards or Azure Workbooks can be used to create visualizations for API performance, error rates, robot activity, command throughput, etc. No additional API work is needed if logs are structured well.
+- **Scalability**:
+    - The use of Azure App Service allows for independent scaling of compute resource.
+    - Stateless API design (JWT auth) facilitates horizontal scaling.
+- **Modular Design**: Vertical slices (CQRS) allow for easy addition of new features without impacting existing functionality.
+
+## 12. Technical Decisions & Highlights
+- **CQRS Pattern**: Used to separate read and write operations, allowing for better scalability and maintainability.
+- **Pipeline Behaviors**: Implemented for cross-cutting concerns like validation, logging, and exception handling.
+- **Middleware**: Custom middleware for centralized exception handling and logging.
+- **Testcontainers**: Used for integration tests with MongoDB, ensuring a clean state for each test run.
+- **Docker and Kubernetes**: Dockerized the API for consistent deployment across environments. Used Kubernetes (kind) for local development and testing.
+- **Serilog**: Chosen for structured logging, with sinks for console and Azure Application Insights.
+- **Infrastructure as Code**: Used Terraform for reproducible infrastructure deployment, allowing for version control and easy environment setup.
+- **CI/CD with GitHub Actions**: Automated build, test, and deployment processes to ensure code quality and rapid delivery.
+- **Security**: Implemented JWT authentication and role-based authorization to secure API endpoints.
