@@ -512,8 +512,22 @@ All endpoints requiring authentication except `Auth/Login` must include an `Auth
 
 ### CI/CD Pipeline (GitHub Actions)
 
-A `/.github/workflows/ci-cd.yml` file will define the pipeline.
+A `/.github/workflows/ci-cd.yml` file defines the pipeline.
 
 **Trigger:** On push to `main` branch or on creation of a pull request targeting `main`.
 
 **Pipeline Steps:**
+
+1.  **Checkout Code:** `actions/checkout@v3`
+2.  **Set up .NET SDK:** `actions/setup-dotnet@v3` with specified .NET version (8.x).
+3.  **Restore Dependencies:** `dotnet restore`
+4.  **Build Application:** `dotnet build --configuration Release`
+5.  **Run Tests:** `dotnet test --configuration Release --verbosity normal`
+6.  **Login to Azure Container Registry (ACR):** `azure/docker-login@v1`
+7.  **Build and Push Docker Image:** `docker build ...` and `docker push ...`
+8.  **Login to Azure:** `azure/login@v1` (using service principal secrets stored in GitHub Secrets)
+9.  **Deploy to Azure App Service:**
+    *   For code deployment: `azure/webapps-deploy@v2` using the build artifact.
+    *   For container deployment: Configure App Service to pull from ACR.
+
+> Before running the pipeline, ensure that the following GitHub Secrets are set: `ACR_LOGIN_SERVER`, `ACR_USERNAME`, `ACR_PASSWORD`, `AZURE_WEBAPP_NAME`.
