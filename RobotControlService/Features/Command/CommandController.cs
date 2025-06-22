@@ -59,7 +59,7 @@ namespace RobotControlService.Features.Command
         }
 
         [HttpPut("UpdateCommandStatus")]
-        [Authorize(Roles = "Robot,Admin")]
+        [Authorize(Roles = "Robot")]
         public async Task<IActionResult> UpdateCommandStatus([FromBody] UpdateCommandStatusDto updateCommandStatusDto, CancellationToken cancellationToken)
         {
             var request = new UpdateCommandStatusRequest(updateCommandStatusDto.CommandId, updateCommandStatusDto.NewCommandStatus, updateCommandStatusDto.FailureReason);

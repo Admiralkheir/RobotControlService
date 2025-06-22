@@ -106,7 +106,7 @@ namespace RobotControlService.Features.Command.UpdateCommandStatus
 
                 case CommandType.Rotate:
                     // get double degree from command parameters
-                    if (commandParameters.TryGetValue("degree", out var degreeObj) && double.TryParse(degreeObj, out var degree))
+                    if (commandParameters.TryGetValue("degrees", out var degreeObj) && double.TryParse(degreeObj, out var degree))
                     {
                         currentPosition.Orientation = (currentPosition.Orientation + degree) % 360;
                     }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 using RobotControlService.Data;
 using RobotControlService.Domain.Entities;
 using RobotControlService.Exceptions;
@@ -33,7 +34,7 @@ namespace RobotControlService.Features.Auth.CreateUser
                 PasswordHash = passwordHash,
                 Username = request.Username,
                 Role = Enum.Parse<UserRole>(request.Role,true),
-                RobotIds = request.RobotIds,
+                RobotIds = request.RobotIds.Select(s=>ObjectId.Parse(s)).ToList(),
                 CreatedDate = DateTime.UtcNow
             };
 
