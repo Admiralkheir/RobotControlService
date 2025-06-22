@@ -34,7 +34,7 @@ namespace RobotControlService.Features.Command.SendCommand
             {
                 RobotId = robot.Id,
                 UserId = user.Id,
-                CommandType = Enum.Parse<RobotControlService.Domain.Entities.CommandType>(request.CommandType,true),
+                CommandType = Enum.Parse<RobotControlService.Domain.Entities.CommandType>(request.CommandType, true),
                 CreatedDate = DateTime.UtcNow,
                 CommandStatus = RobotControlService.Domain.Entities.CommandStatus.Queued,
                 CommandParameters = request.CommandParameters
@@ -44,7 +44,7 @@ namespace RobotControlService.Features.Command.SendCommand
             await _dbContext.Commands.AddAsync(command, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new SendCommandResponse(robot.Name, robot.Status.ToString(), robot.CurrentPosition, robot.CurrentCommandId.ToString());
+            return new SendCommandResponse(command.Id.ToString(), robot.Name, robot.Status.ToString(), robot.CurrentPosition, robot.CurrentCommandId.ToString());
         }
     }
 }

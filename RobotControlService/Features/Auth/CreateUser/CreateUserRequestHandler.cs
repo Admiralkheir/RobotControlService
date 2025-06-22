@@ -34,14 +34,14 @@ namespace RobotControlService.Features.Auth.CreateUser
                 PasswordHash = passwordHash,
                 Username = request.Username,
                 Role = Enum.Parse<UserRole>(request.Role,true),
-                RobotIds = request.RobotIds.Select(s=>ObjectId.Parse(s)).ToList(),
+                RobotIds = request.RobotIds?.Select(s=>ObjectId.Parse(s)).ToList(),
                 CreatedDate = DateTime.UtcNow
             };
 
             await _dbContext.Users.AddAsync(user, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return new CreateUserResponse(user.Id.ToString(), user.Username, user.CreatedDate, user.RobotIds.Select(s => s.ToString()).ToList(), user.Role.ToString());
+            return new CreateUserResponse(user.Id.ToString(), user.Username, user.CreatedDate, user.RobotIds?.Select(s => s.ToString()).ToList(), user.Role.ToString());
         }
     }
 }
